@@ -1,0 +1,65 @@
+<!----------------Table for View and Edit Data           -->
+<input type="text" [(ngModel)]="term" placeholder="Search .......">
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">S.No</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Mobile</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let d of myData |paginate :{itemsPerPage :2, currentPage : p} | filter : term; index as i">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>
+            {{ d.name }}
+          </td>
+          <td>{{ d.email }}</td>
+          <td>{{ d.mobile}}</td>
+          <button class="btn btn-primary" (click)="openXl(content,d)">
+            Edit
+          </button>&nbsp;&nbsp;
+          
+          <button class="btn btn-danger" (click)="delete(d._id)">
+            Delete
+          </button>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="p = $event" class="float:right"></pagination-controls>
+    
+
+
+      <!-------------------------Model for updating Data              -->
+        
+  <ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Edit Data</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+       
+  
+      <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 style="font-size: 16px; color: black; font-family: lato;">Name</h4>
+                <input type="text" class="form-control" [(ngModel)]="dataobject.name" >
+                <h4 style="font-size: 16px; color: black; font-family: lato;">Email</h4>
+                <input type="text" [(ngModel)]="dataobject.email" class="form-control" >
+                <h4 style="font-size: 16px; color: black; font-family: lato;">Mobile</h4>
+                <input type="number" [(ngModel)]="dataobject.mobile" class="form-control" >
+                <br><br>
+                <button class="btn btn-success" (click)="update()">
+                 Update
+                </button>
+        
+            </div>
+        </div>
+        </div>
+        
+  </div></ng-template>
+  
